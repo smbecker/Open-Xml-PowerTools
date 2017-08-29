@@ -60,38 +60,38 @@ if (Get-Module Open-XML-PowerTools) { return }
 # AddTypes.ps1 is in the same directory as Open-XML-PowerTools.psm1
 # needs to access both Cmdlets and OpenXmlPowerTools
 . "$PSScriptRoot\AddTypes.ps1"
-. "$PSScriptRoot\Cmdlets\Utils.ps1"
+. "$PSScriptRoot\Utils.ps1"
 
 ## Applies to any file
-. "$PSScriptRoot\Cmdlets\ConvertTo-Base64.ps1"
-. "$PSScriptRoot\Cmdlets\ConvertFrom-Base64.ps1"
-. "$PSScriptRoot\Cmdlets\ConvertTo-FlatOpc.ps1"
-. "$PSScriptRoot\Cmdlets\ConvertFrom-FlatOpc.ps1"
+. "$PSScriptRoot\ConvertTo-Base64.ps1"
+. "$PSScriptRoot\ConvertFrom-Base64.ps1"
+. "$PSScriptRoot\ConvertTo-FlatOpc.ps1"
+. "$PSScriptRoot\ConvertFrom-FlatOpc.ps1"
 
 ## Applies to all Open XML document types
-. "$PSScriptRoot\Cmdlets\Get-OpenXmlValidationErrors.ps1"
-. "$PSScriptRoot\Cmdlets\Test-OpenXmlValid.ps1"
-. "$PSScriptRoot\Cmdlets\Test-OpenXmlPowerToolsCmdlets.ps1"
+. "$PSScriptRoot\Get-OpenXmlValidationErrors.ps1"
+. "$PSScriptRoot\Test-OpenXmlValid.ps1"
+. "$PSScriptRoot\Test-OpenXmlPowerToolsCmdlets.ps1"
 
 # DOCX
-. "$PSScriptRoot\Cmdlets\Convert-DocxToHtml.ps1"
-. "$PSScriptRoot\Cmdlets\Clear-DocxTrackedRevision.ps1"
-. "$PSScriptRoot\Cmdlets\Expand-DocxFormatting.ps1"
-. "$PSScriptRoot\Cmdlets\Merge-Docx.ps1"
-. "$PSScriptRoot\Cmdlets\Complete-DocxTemplateFromXml.ps1"
-. "$PSScriptRoot\Cmdlets\New-Docx.ps1"
-. "$PSScriptRoot\Cmdlets\Add-DocxText.ps1"
-. "$PSScriptRoot\Cmdlets\New-WmlDocument.ps1"
-. "$PSScriptRoot\Cmdlets\DocxLib.ps1"
-. "$PSScriptRoot\Cmdlets\Get-DocxMetrics.ps1"
+. "$PSScriptRoot\Convert-DocxToHtml.ps1"
+. "$PSScriptRoot\Clear-DocxTrackedRevision.ps1"
+. "$PSScriptRoot\Expand-DocxFormatting.ps1"
+. "$PSScriptRoot\Merge-Docx.ps1"
+. "$PSScriptRoot\Complete-DocxTemplateFromXml.ps1"
+. "$PSScriptRoot\New-Docx.ps1"
+. "$PSScriptRoot\Add-DocxText.ps1"
+. "$PSScriptRoot\New-WmlDocument.ps1"
+. "$PSScriptRoot\DocxLib.ps1"
+. "$PSScriptRoot\Get-DocxMetrics.ps1"
 
 # XLSX
 
 # PPTX
-. "$PSScriptRoot\Cmdlets\New-Pptx.ps1"
-. "$PSScriptRoot\Cmdlets\Merge-Pptx.ps1"
-. "$PSScriptRoot\Cmdlets\PptxLib.ps1"
-. "$PSScriptRoot\Cmdlets\New-PmlDocument.ps1"
+. "$PSScriptRoot\New-Pptx.ps1"
+. "$PSScriptRoot\Merge-Pptx.ps1"
+. "$PSScriptRoot\PptxLib.ps1"
+. "$PSScriptRoot\New-PmlDocument.ps1"
 
 Export-ModuleMember `
     -Alias @(

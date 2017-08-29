@@ -8,7 +8,7 @@
     GUID = '8fd20ed9-6a1d-4e27-9861-facb1d4812ae'
 
     # Author of this module
-    Author = 'Eric White'
+    Author = 'Microsoft'
 
     # Company or vendor of this module
     CompanyName = 'http://microsoft.com/'
