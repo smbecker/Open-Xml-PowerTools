@@ -17,18 +17,14 @@ Email: eric@ericwhite.com
 ***************************************************************************/
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenXmlPowerTools
 {
-    public class TestUtil
+    internal static class TestUtil
     {
-        public static DirectoryInfo SourceDir = new DirectoryInfo("../../../TestFiles/");
+        public static DirectoryInfo SourceDir = new DirectoryInfo(Path.Combine(Path.GetDirectoryName(typeof(OpenXmlPowerTools.TestUtil).Assembly.Location), "../../../../TestFiles/"));
         private static bool? s_DeleteTempFiles = null;
 
         public static bool DeleteTempFiles

@@ -47,9 +47,14 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using System.Xml.Linq;
 using DocumentFormat.OpenXml.Packaging;
+
+#if NET452
+using System.Windows.Forms;
+#else
+using Bitmap = ImageSharp.Image<ImageSharp.Rgba32>;
+#endif
 
 // 200e lrm - LTR
 // 200f rlm - RTL
@@ -2287,9 +2292,11 @@ namespace OpenXmlPowerTools
                 if (_knownFamilies == null)
                 {
                     _knownFamilies = new HashSet<string>();
+#if NET452
                     var families = FontFamily.Families;
                     foreach (var fam in families)
                         _knownFamilies.Add(fam.Name);
+#endif
                 }
                 return _knownFamilies;
             }
@@ -2314,6 +2321,7 @@ namespace OpenXmlPowerTools
             if (!KnownFamilies.Contains(fontName))
                 return 0;
 
+#if NET452
             // in theory, all unknown fonts are found by the above test, but if not...
             FontFamily ff;
             try
@@ -2332,6 +2340,7 @@ namespace OpenXmlPowerTools
                 fs |= FontStyle.Bold;
             if (GetBoolProp(rPr, W.i) || GetBoolProp(rPr, W.iCs))
                 fs |= FontStyle.Italic;
+#endif
 
             // Appended blank as a quick fix to accommodate &nbsp; that will get
             // appended to some layout-critical runs such as list item numbers.
@@ -2370,6 +2379,7 @@ namespace OpenXmlPowerTools
                 runText = sb.ToString();
             }
 
+#if NET452
             try
             {
                 using (Font f = new Font(ff, (float) sz/2f, fs))
@@ -2438,6 +2448,9 @@ namespace OpenXmlPowerTools
                 // This happened on Azure but interestingly enough not while testing locally.
                 return 0;
             }
+#else
+            return 0;
+#endif
         }
 
         private static void InsertAppropriateNonbreakingSpaces(WordprocessingDocument wordDoc)
@@ -3183,7 +3196,11 @@ namespace OpenXmlPowerTools
                 return null;
 
             using (var partStream = imagePart.GetStream())
+#if NET452
             using (var bitmap = new Bitmap(partStream))
+#else
+            using (var bitmap = ImageSharp.Image.Load(partStream))
+#endif
             {
                 if (extentCx != null && extentCy != null)
                 {
@@ -3249,7 +3266,11 @@ namespace OpenXmlPowerTools
                 {
                     try
                     {
+#if NET452
                         using (var bitmap = new Bitmap(partStream))
+#else
+                        using (var bitmap = ImageSharp.Image.Load(partStream))
+#endif
                         {
                             var imageInfo = new ImageInfo()
                             {

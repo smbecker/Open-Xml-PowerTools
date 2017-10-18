@@ -23,7 +23,6 @@ Email: eric@ericwhite.com
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -218,30 +217,7 @@ namespace OxPt
                                 localDirInfo.Create();
                             ++imageCounter;
                             string extension = imageInfo.ContentType.Split('/')[1].ToLower();
-                            ImageFormat imageFormat = null;
-                            if (extension == "png")
-                            {
-                                // Convert png to jpeg.
-                                extension = "gif";
-                                imageFormat = ImageFormat.Gif;
-                            }
-                            else if (extension == "gif")
-                                imageFormat = ImageFormat.Gif;
-                            else if (extension == "bmp")
-                                imageFormat = ImageFormat.Bmp;
-                            else if (extension == "jpeg")
-                                imageFormat = ImageFormat.Jpeg;
-                            else if (extension == "tiff")
-                            {
-                                // Convert tiff to gif.
-                                extension = "gif";
-                                imageFormat = ImageFormat.Gif;
-                            }
-                            else if (extension == "x-wmf")
-                            {
-                                extension = "wmf";
-                                imageFormat = ImageFormat.Wmf;
-                            }
+                            var imageFormat = HtmlConverterHelper.GetExportFormat(ref extension);
 
                             // If the image format isn't one that we expect, ignore it,
                             // and don't return markup for the link.
@@ -254,7 +230,7 @@ namespace OxPt
                             {
                                 imageInfo.Bitmap.Save(imageFileName, imageFormat);
                             }
-                            catch (System.Runtime.InteropServices.ExternalException)
+                            catch (Exception)
                             {
                                 return null;
                             }
@@ -311,30 +287,7 @@ namespace OxPt
                                 localDirInfo.Create();
                             ++imageCounter;
                             string extension = imageInfo.ContentType.Split('/')[1].ToLower();
-                            ImageFormat imageFormat = null;
-                            if (extension == "png")
-                            {
-                                // Convert png to jpeg.
-                                extension = "gif";
-                                imageFormat = ImageFormat.Gif;
-                            }
-                            else if (extension == "gif")
-                                imageFormat = ImageFormat.Gif;
-                            else if (extension == "bmp")
-                                imageFormat = ImageFormat.Bmp;
-                            else if (extension == "jpeg")
-                                imageFormat = ImageFormat.Jpeg;
-                            else if (extension == "tiff")
-                            {
-                                // Convert tiff to gif.
-                                extension = "gif";
-                                imageFormat = ImageFormat.Gif;
-                            }
-                            else if (extension == "x-wmf")
-                            {
-                                extension = "wmf";
-                                imageFormat = ImageFormat.Wmf;
-                            }
+                            var imageFormat = HtmlConverterHelper.GetExportFormat(ref extension);
 
                             // If the image format isn't one that we expect, ignore it,
                             // and don't return markup for the link.
@@ -347,7 +300,7 @@ namespace OxPt
                             {
                                 imageInfo.Bitmap.Save(imageFileName, imageFormat);
                             }
-                            catch (System.Runtime.InteropServices.ExternalException)
+                            catch (Exception)
                             {
                                 return null;
                             }

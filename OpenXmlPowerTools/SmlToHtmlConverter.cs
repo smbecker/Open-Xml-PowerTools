@@ -23,7 +23,6 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using System.Xml.Linq;
 using DocumentFormat.OpenXml.Packaging;
 using System.IO;
@@ -252,9 +251,11 @@ namespace OpenXmlPowerTools
                 if (_knownFamilies == null)
                 {
                     _knownFamilies = new HashSet<string>();
+#if NET452
                     var families = FontFamily.Families;
                     foreach (var fam in families)
                         _knownFamilies.Add(fam.Name);
+#endif
                 }
                 return _knownFamilies;
             }

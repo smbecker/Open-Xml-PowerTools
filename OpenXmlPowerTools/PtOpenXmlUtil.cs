@@ -26,6 +26,7 @@ Version: 2.6.00
 ***************************************************************************/
 
 using System;
+using System.Drawing;
 using System.IO;
 using System.IO.Packaging;
 using System.IO.Compression;
@@ -36,9 +37,6 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using DocumentFormat.OpenXml.Packaging;
-using System.Drawing;
-using Font = System.Drawing.Font;
-using FontFamily = System.Drawing.FontFamily;
 
 // ReSharper disable InconsistentNaming
 
@@ -661,9 +659,11 @@ namespace OpenXmlPowerTools
             if (KnownFamilies == null)
             {
                 KnownFamilies = new HashSet<string>();
+#if NET452
                 var families = FontFamily.Families;
                 foreach (var fam in families)
                     KnownFamilies.Add(fam.Name);
+#endif
             }
 
             var fontName = (string)r.Attribute(PtOpenXml.pt + "FontName");
@@ -689,6 +689,8 @@ namespace OpenXmlPowerTools
             // unknown font families will throw ArgumentException, in which case just return 0
             if (!KnownFamilies.Contains(fontName))
                 return 0;
+            
+#if NET452
             // in theory, all unknown fonts are found by the above test, but if not...
             FontFamily ff;
             try
@@ -710,6 +712,7 @@ namespace OpenXmlPowerTools
                 fs = FontStyle.Italic;
             if (bold && italic)
                 fs = FontStyle.Bold | FontStyle.Italic;
+#endif
 
             var runText = r.DescendantsTrimmed(W.txbxContent)
                 .Where(e => e.Name == W.t)
@@ -743,6 +746,7 @@ namespace OpenXmlPowerTools
                 runText = sb.ToString();
             }
 
+#if NET452
             try
             {
                 using (Font f = new Font(ff, (float)sz / 2f, fs))
@@ -803,6 +807,9 @@ namespace OpenXmlPowerTools
                     }
                 }
             }
+#else
+            return 0;
+#endif
         }
 
         public static bool GetBoolProp(XElement runProps, XName xName)

@@ -19,7 +19,6 @@ Email: eric@ericwhite.com
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -399,7 +398,7 @@ namespace OxPt
                     File.Copy(source2Docx.FullName, source2CopiedToDestDocxForWord.FullName);
 
                 FileInfo wordExe = new FileInfo(@"C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE");
-                var path = new DirectoryInfo(@"C:\Users\Eric\Documents\WindowsPowerShellModules\Open-Xml-PowerTools\TestFiles");
+                var path = TestUtil.SourceDir;
                 WordRunner.RunWord(wordExe, source2CopiedToDestDocxForWord);
                 WordRunner.RunWord(wordExe, source1CopiedToDestDocxForWord);
             }
@@ -649,7 +648,7 @@ namespace OxPt
                 File.Copy(source2Docx.FullName, source2CopiedToDestDocxForWord.FullName);
 
                 FileInfo wordExe = new FileInfo(@"C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE");
-                var path = new DirectoryInfo(@"C:\Users\Eric\Documents\WindowsPowerShellModules\Open-Xml-PowerTools\TestFiles");
+                var path = TestUtil.SourceDir;
                 WordRunner.RunWord(wordExe, source2CopiedToDestDocxForWord);
                 WordRunner.RunWord(wordExe, source1CopiedToDestDocxForWord);
             }
@@ -969,7 +968,7 @@ namespace OxPt
                     File.Copy(source2Docx.FullName, source2CopiedToDestDocxForWord.FullName);
 
                 FileInfo wordExe = new FileInfo(@"C:\Program Files (x86)\Microsoft Office\root\Office16\WINWORD.EXE");
-                var path = new DirectoryInfo(@"C:\Users\Eric\Documents\WindowsPowerShellModules\Open-Xml-PowerTools\TestFiles");
+                var path = TestUtil.SourceDir;
                 WordRunner.RunWord(wordExe, source2CopiedToDestDocxForWord);
                 WordRunner.RunWord(wordExe, source1CopiedToDestDocxForWord);
             }

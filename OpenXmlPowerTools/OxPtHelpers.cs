@@ -29,7 +29,13 @@ using DocumentFormat.OpenXml.Validation;
 using OpenXmlPowerTools;
 using System.Text;
 using DocumentFormat.OpenXml;
+
+#if NET452
 using System.Drawing.Imaging;
+#else
+using ImageSharp.Formats;
+using Bitmap = ImageSharp.Image<ImageSharp.Rgba32>;
+#endif
 
 namespace OpenXmlPowerTools
 {
@@ -389,30 +395,8 @@ AAsACwDBAgAAbCwAAAAA";
                                 localDirInfo.Create();
                             ++imageCounter;
                             string extension = imageInfo.ContentType.Split('/')[1].ToLower();
-                            ImageFormat imageFormat = null;
-                            if (extension == "png")
-                            {
-                                // Convert png to jpeg.
-                                extension = "gif";
-                                imageFormat = ImageFormat.Gif;
-                            }
-                            else if (extension == "gif")
-                                imageFormat = ImageFormat.Gif;
-                            else if (extension == "bmp")
-                                imageFormat = ImageFormat.Bmp;
-                            else if (extension == "jpeg")
-                                imageFormat = ImageFormat.Jpeg;
-                            else if (extension == "tiff")
-                            {
-                                // Convert tiff to gif.
-                                extension = "gif";
-                                imageFormat = ImageFormat.Gif;
-                            }
-                            else if (extension == "x-wmf")
-                            {
-                                extension = "wmf";
-                                imageFormat = ImageFormat.Wmf;
-                            }
+
+                            var imageFormat = GetExportFormat(ref extension);
 
                             // If the image format isn't one that we expect, ignore it,
                             // and don't return markup for the link.
@@ -425,7 +409,7 @@ AAsACwDBAgAAbCwAAAAA";
                             {
                                 imageInfo.Bitmap.Save(imageFileName, imageFormat);
                             }
-                            catch (System.Runtime.InteropServices.ExternalException)
+                            catch (Exception)
                             {
                                 return null;
                             }
@@ -451,6 +435,64 @@ AAsACwDBAgAAbCwAAAAA";
                     File.WriteAllText(destFileName.FullName, htmlString, Encoding.UTF8);
                 }
             }
+        }
+
+#if NET452
+        internal static ImageFormat GetExportFormat(ref string extension) {
+#else
+        internal static IImageEncoder GetExportFormat(ref string extension) {
+#endif
+            
+#if NET452
+            ImageFormat imageFormat = null;
+#else
+            IImageEncoder imageFormat = null;
+#endif
+            if (extension == "png") {
+                // Convert png to gif.
+                extension = "gif";
+#if NET452
+                imageFormat = ImageFormat.Gif;
+#else
+                imageFormat = new GifEncoder();
+#endif
+            } else if (extension == "gif")
+#if NET452
+                imageFormat = ImageFormat.Gif;
+#else
+                imageFormat = new GifEncoder();
+#endif
+            else if (extension == "bmp")
+#if NET452
+                imageFormat = ImageFormat.Bmp;
+#else
+                imageFormat = new BmpEncoder();
+#endif
+            else if (extension == "jpeg")
+#if NET452
+                imageFormat = ImageFormat.Jpeg;
+#else
+                imageFormat = new JpegEncoder();
+#endif
+            else if (extension == "tiff") {
+                // Convert tiff to gif.
+                extension = "gif";
+#if NET452
+                imageFormat = ImageFormat.Gif;
+#else
+                imageFormat = new GifEncoder();
+#endif
+            } else if (extension == "x-wmf") {
+#if NET452
+                extension = "wmf";
+                imageFormat = ImageFormat.Wmf;
+#else
+                // Convert wmf to gif on netcore.
+                extension = "gif";
+                imageFormat = new GifEncoder();
+#endif
+            }
+            return imageFormat;
         }
     }
 

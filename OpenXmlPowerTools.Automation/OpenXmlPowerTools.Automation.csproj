@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenXmlPowerTools\OpenXmlPowerTools.csproj" />
+    <PackageReference Include="System.Management.Automation" Version="6.1.7601.17515" />
+  </ItemGroup>
+</Project>

@@ -1,26 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
   </PropertyGroup>
-
   <ItemGroup>
     <Content Include="OpenXmlPowerTools.dll-Help.xml" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.7.2" />
-    <PackageReference Include="System.Management.Automation" Version="6.1.7601.17515" />
   </ItemGroup>
-
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
-
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="ImageSharp" Version="1.0.0-alpha9-00194" />
+  </ItemGroup>
   <Target Name="Build" Condition=" '$(ImportProjectFile)' == 'true' " DependsOnTargets="$(BuildDependsOn)" Outputs="@(AllOutputs->'%(FullPath)')">
     <CreateItem Include="$(OutputPath)\**\*">
       <Output ItemName="AllOutputs" TaskParameter="Include" />
     </CreateItem>
-  </Target>
-</Project>
+  </Target></Project>

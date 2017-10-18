@@ -36,3 +36,6 @@ TestResults/
 
 # Visual Studio
 .vs/
+
+# Rider
+.idea/
